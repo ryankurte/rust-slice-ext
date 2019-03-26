@@ -1,7 +1,7 @@
 [package]
 name = "slice-ext"
 description = "Useful extensions to slices and iterable types"
-version = "0.1.2"
+version = "0.1.3-alpha.0"
 authors = ["Ryan Kurte <ryankurte@gmail.com>"]
 repository = "https://github.com/ryankurte/rust-slice-ext"
 edition = "2018"

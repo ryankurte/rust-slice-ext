@@ -91,8 +91,6 @@ where
         // Select search range
         let index = self.index;
 
-        println!("Index: {}", index);
-
         for i in index..self.data.len() {
 
             if (self.matcher)(&self.data[i]) {

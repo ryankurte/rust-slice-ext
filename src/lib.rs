@@ -6,7 +6,7 @@
 /// ```
 /// use slice_ext::*;
 /// 
-/// let a: Vec<u8> = vec![0, 1, 2]; 
+/// let a: &[u8] = &[0, 1, 2]; 
 /// let mut s = (&a[..]).split_before(|v| *v == 1 );
 /// 
 /// assert_eq!(s.next().unwrap(), &[0]);
@@ -21,7 +21,7 @@ pub trait SplitBefore<'a, T: 'a, P> {
 impl <'a, T: 'a, P> SplitBefore<'a, T, P> for &'a [T] 
 where
     P: FnMut(&T) -> bool,
-    T: std::fmt::Debug,
+    T: core::fmt::Debug,
 {
     fn split_before(&self, predicate: P) -> SplitInc<'a, T, P> {
         SplitInc::split_before(&self, predicate)
@@ -35,7 +35,7 @@ where
 /// ```
 /// use slice_ext::*;
 /// 
-/// let a: Vec<u8> = vec![0, 1, 2]; 
+/// let a: &[u8] = &[0, 1, 2]; 
 /// let mut s = (&a[..]).split_after(|v| *v == 1 );
 /// 
 /// assert_eq!(s.next().unwrap(), &[0, 1]);
@@ -50,7 +50,7 @@ pub trait SplitAfter<'a, T: 'a, P> {
 impl <'a, T: 'a, P> SplitAfter<'a, T, P> for &'a [T] 
 where
     P: FnMut(&T) -> bool,
-    T: std::fmt::Debug,
+    T: core::fmt::Debug,
 {
     fn split_after(&self, predicate: P) -> SplitInc<'a, T, P> {
         SplitInc::split_after(&self, predicate)
@@ -72,7 +72,7 @@ enum Mode {
 impl <'a, T, F> SplitInc<'a, T, F> 
 where 
     F: FnMut(&T) -> bool,
-    T: std::fmt::Debug,
+    T: core::fmt::Debug,
 {
     pub fn split_before(data: &'a [T], matcher: F) -> Self {
         SplitInc{ index: 0, data, matcher, mode: Mode::Before }
@@ -151,7 +151,7 @@ where
 impl <'a, T, F> Iterator for SplitInc<'a, T, F> 
 where 
     F: FnMut(&T) -> bool,
-    T: std::fmt::Debug,
+    T: core::fmt::Debug,
 {
     type Item = &'a [T];
     
@@ -170,7 +170,7 @@ mod tests {
 
     #[test]
     fn test_split_before() {
-        let a: Vec<u8> = vec![0, 1, 2, 3, 4, 5, 6, 7, 8];
+        let a: &[u8] = &[0, 1, 2, 3, 4, 5, 6, 7, 8];
         
         let mut s = (&a[..]).split_before(|v| *v == 2 || *v == 5);
         
@@ -182,7 +182,7 @@ mod tests {
     
     #[test]
     fn test_split_before_no_match() {
-        let a: Vec<u8> = vec![0, 1, 2];
+        let a: &[u8] = &[0, 1, 2];
         
         let mut s = SplitInc::split_before(&a, |v| *v == 12);
         
@@ -192,7 +192,7 @@ mod tests {
     
     #[test]
     fn test_split_before_start() {
-        let a: Vec<u8> = vec![0, 1, 2];
+        let a: &[u8] = &[0, 1, 2];
         
         let mut s = SplitInc::split_before(&a, |v| *v == 0 );
         
@@ -202,7 +202,7 @@ mod tests {
     
     #[test]
     fn test_split_before_end() {
-        let a: Vec<u8> = vec![0, 1, 2];
+        let a: &[u8] = &[0, 1, 2];
         
         let mut s = SplitInc::split_before(&a, |v| *v == 2 );
         
@@ -213,7 +213,7 @@ mod tests {
 
     #[test]
     fn test_split_after() {
-        let a: Vec<u8> = vec![0, 1, 2, 3, 4, 5, 6, 7, 8];
+        let a: &[u8] = &[0, 1, 2, 3, 4, 5, 6, 7, 8];
         
         let mut s = SplitInc::split_after(&a, |v| *v == 2 || *v == 5);
         
@@ -225,7 +225,7 @@ mod tests {
     
     #[test]
     fn test_split_after_no_match() {
-        let a: Vec<u8> = vec![0, 1, 2];
+        let a: &[u8] = &[0, 1, 2];
         
         let mut s = SplitInc::split_after(&a, |v| *v == 12);
         
@@ -235,7 +235,7 @@ mod tests {
     
     #[test]
     fn test_split_after_start() {
-        let a: Vec<u8> = vec![0, 1, 2];
+        let a: &[u8] = &[0, 1, 2];
         
         let mut s = SplitInc::split_after(&a, |v| *v == 0 );
         
@@ -246,7 +246,7 @@ mod tests {
     
     #[test]
     fn test_split_after_end() {
-        let a: Vec<u8> = vec![0, 1, 2];
+        let a: &[u8] = &[0, 1, 2];
         
         let mut s = SplitInc::split_after(&a, |v| *v == 2 );
         
@@ -254,3 +254,4 @@ mod tests {
         assert_eq!(s.next().is_none(), true);
     }
 }
+

@@ -1,4 +1,7 @@
 
+
+#![no_std]
+
 /// SplitBefore trait returns an iterator splitting a slice before a predicate
 /// and including the matched item at the start of the next set (if found).
 /// For example:
